@@ -1,9 +1,10 @@
-﻿using RaceSimulator.Transportation.Abstractions;
+﻿using RaceSimulator.RaceLogic;
+using RaceSimulator.Transportation.Abstractions;
 
 namespace RaceSimulator.Presentation.Interfaces;
 
-internal interface IReciever
+internal interface IReciever<T>
 {
-    double GetRaceDistance();
-    int GetRaceType();
+    void GetParams(ISimulator<T> simulator);
+    void GetObject(ISimulator<T> simulator);
 }
