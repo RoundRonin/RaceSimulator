@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Race.presentation;
+namespace RaceSimulator.Presentation.Interfaces;
 
-public interface IPrinter 
+public interface IPrinter
 {
     public void PrintFormattedLine(string key, string value);
 }

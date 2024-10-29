@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Race.Presentiation;
+namespace RaceSimulator.Presentation.Interfaces;
 
 internal interface IReciever
 {
