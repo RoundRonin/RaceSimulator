@@ -5,8 +5,6 @@ namespace RaceSimulator.RaceLogic;
 
 public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator<AbstractVehicle>
 {
-    private readonly IPrinter _printer = printer;
-    private readonly int _tickTimeMs = tickTimeMs;
     private double _distance = 0;
     private readonly List<AbstractVehicle> _vehicles = new();
     private Func<AbstractVehicle, bool> _vehicleValidator = _ => true;
@@ -18,8 +16,8 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator<Abs
         if (_vehicleValidator(objectToRegister))
         {
             _vehicles.Add(objectToRegister);
-            _printer.PrintFormattedLine("Vehicles", "Registered vehicle:");
-            _printer.PrintFormattedLine("Vehicles", objectToRegister.Name.ToString());
+            printer.PrintFormattedLine("Vehicles", "Registered vehicle:");
+            printer.PrintFormattedLine("Vehicles", objectToRegister.Name.ToString());
         }
         else
         {
@@ -48,7 +46,7 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator<Abs
             foreach (var vehicle in _vehicles)
             {
                 currentPosition = vehicle.CalculatePosition();
-                _printer.PrintFormattedLine(vehicle.Name, currentPosition.ToString());
+                printer.PrintFormattedLine(vehicle.Name, currentPosition.ToString());
                 if (currentPosition >= _distance)
                 {
                     Result = vehicle;
@@ -57,7 +55,7 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator<Abs
                 }
             }
             if (done) break;
-            Thread.Sleep(_tickTimeMs);
+            Thread.Sleep(tickTimeMs);
         }
     }
 }

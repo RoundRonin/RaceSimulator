@@ -2,6 +2,7 @@
 using RaceSimulator.Transportation;
 using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.RaceLogic;
+using RaceSimulator.Transportation.Utils;
 
 namespace RaceSimulator.Presentation.CLI;
 
@@ -19,6 +20,8 @@ internal class CLI(IPrinter printer) : IReciever<AbstractVehicle>, IInformer
 
     public void GetObject(ISimulator<AbstractVehicle> simulator)
     {
+        var vehicleTypes = VehicleHelper.GetAllVehicleTypes();
+
         printer.PrintFormattedLine("Prompt", "How many vehicles do you want to register?");
         string? input = Console.ReadLine();
         while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleCount) || vehicleCount <= 0)
@@ -32,12 +35,14 @@ internal class CLI(IPrinter printer) : IReciever<AbstractVehicle>, IInformer
         while (remainingVehiclesToAdd > 0)
         {
             printer.PrintFormattedLine("Prompt", $"Choose vehicle:");
-            printer.PrintFormattedLine("1", "Centaur");
-            printer.PrintFormattedLine("2", "SevenLeagueBoots");
-            printer.PrintFormattedLine("3", "MagicCarpet");
-            printer.PrintFormattedLine("4", "BabaYagasStupa");
+            for (int i = 0; i < vehicleTypes.Count; i++)
+            {
+                var vehicleName = vehicleTypes[i].Name;
+                printer.PrintFormattedLine((i + 1).ToString(), vehicleName);
+            }
+
             input = Console.ReadLine();
-            while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleType) || vehicleType < 1 || vehicleType > 4)
+            while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleType) || vehicleType < 1 || vehicleType > vehicleTypes.Count)
             {
                 printer.PrintFormattedLine("Error", "Invalid input. Choose a vehicle:");
                 input = Console.ReadLine();
