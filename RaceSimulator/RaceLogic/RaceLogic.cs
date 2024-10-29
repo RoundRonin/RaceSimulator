@@ -16,7 +16,6 @@ public class RaceLogic(double distance, IPrinter printer)
 
     public AbstractVehicle StartRace()
     {
-        AbstractVehicle winner = null;
         double currentPosition = 0;
 
         while (true)
