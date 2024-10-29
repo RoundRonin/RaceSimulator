@@ -2,6 +2,7 @@
 using RaceSimulator.Presentation.CLI;
 using RaceSimulator.RaceLogic;
 using RaceSimulator.Transportation;
+using RaceSimulator.Transportation.Abstractions;
 
 
 IPrinter printer = new CommandLinePrinter();
@@ -24,11 +25,12 @@ int raceType = recieverCLI.GetRaceType();
 
 RaceLogic race = new(distance, printer);
 
-List<string> vehicleTypes = raceType switch
+// Temp solution to generate vehicles automatically
+List<int> vehicleTypes = raceType switch
 {
-    1 => new List<string> { "Centaur", "SevenLeagueBoots" },
-    2 => new List<string> { "MagicCarpet", "BabaYagasStupa" },
-    3 => new List<string> { "Centaur", "SevenLeagueBoots", "MagicCarpet", "BabaYagasStupa" },
+    1 => [1, 2],
+    2 => [3, 4],
+    3 => [1, 2, 3, 4],
     _ => throw new ArgumentException("Invalid race type")
 };
 
@@ -37,5 +39,5 @@ foreach (var vehicleType in vehicleTypes)
     race.RegisterVehicle(VehicleFactory.CreateVehicle(vehicleType));
 }
 
-Vehicle winner = race.StartRace();
+AbstractVehicle winner = race.StartRace();
 informerCLI.DisplayWinner(winner);
