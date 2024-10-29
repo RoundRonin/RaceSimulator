@@ -4,20 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaceSimulator.Transport;
+namespace Race.Transportation;
 
-public abstract class Vehicle
-{
-    protected double CoordinateX;
-
-    public string Name { get; set; }
-    public double Speed { get; set; }
-    public abstract double CalculatePosition();
-
-    protected abstract void UpdateParams();
-}
-
-public abstract class GroundTransport : Vehicle
+public abstract class AbstractGroundTransport : AbstractVehicle
 {
     protected double timeWithoutRest;
     protected double timeSpentResting;
@@ -51,23 +40,6 @@ public abstract class GroundTransport : Vehicle
             resting = true;
             timeWithoutRest = 0;
         }
-
-        UpdateParams();
-
-        return CoordinateX;
-    }
-}
-
-public abstract class AirTransport : Vehicle
-{
-    public double AccelerationCoefficient { get; set; }
-
-    public override double CalculatePosition()
-    {
-        double distanceIncrement = Speed;
-        CoordinateX += distanceIncrement;
-
-        Speed += AccelerationCoefficient;
 
         UpdateParams();
 
