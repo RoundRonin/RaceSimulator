@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Race.Transportation;
+﻿using RaceSimulator.Transportation.Abstractions;
 
 namespace RaceSimulator.Presentation.Interfaces;
 
 internal interface IInformer
 {
-    void DisplayWinner(Vehicle winner);
+    void DisplayWinner(AbstractVehicle winner);
 }

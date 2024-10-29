@@ -1,11 +1,11 @@
-﻿using RaceSimulator.Transport.Abstractions;
+﻿using RaceSimulator.Transportation.Abstractions;
 using RaceSimulator.Presentation.Interfaces;
 
 namespace RaceSimulator.Presentation.CLI;
 
 internal class CLI(IPrinter printer) : IReciever, IInformer
 {
-    public void DisplayWinner(Vehicle winner)
+    public void DisplayWinner(AbstractVehicle winner)
     {
         printer.PrintFormattedLine("Winner", $"The winner is {winner.Name}!");
     }

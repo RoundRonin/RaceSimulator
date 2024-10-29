@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RaceSimulator.Transportation.Abstractions;
 
-namespace Race.Transportation;
+namespace RaceSimulator.Transportation;
 
 public class Centaur : AbstractGroundTransport
 {
