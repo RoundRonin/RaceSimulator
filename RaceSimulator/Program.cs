@@ -4,9 +4,11 @@ using RaceSimulator.RaceLogic;
 using RaceSimulator.Transportation;
 using RaceSimulator.Transportation.Abstractions;
 
+const int TICK_TIME_MS = 1000;
 
 IPrinter printer = new CommandLinePrinter();
 
+RaceLogic raceLogic = new(printer, TICK_TIME_MS);
 CLI cli = new CLI(printer);
 IReciever recieverCLI = cli as IReciever;
 IInformer informerCLI = cli as IInformer;
@@ -22,8 +24,7 @@ printer.PrintFormattedLine("Welcome", "Welcome to the Racing Simulator!");
 
 double distance = recieverCLI.GetRaceDistance();
 int raceType = recieverCLI.GetRaceType();
-
-RaceLogic race = new(distance, printer);
+raceLogic.SetRaceParams(distance);
 
 // Temp solution to generate vehicles automatically
 List<int> vehicleTypes = raceType switch
@@ -36,8 +37,8 @@ List<int> vehicleTypes = raceType switch
 
 foreach (var vehicleType in vehicleTypes)
 {
-    race.RegisterVehicle(VehicleFactory.CreateVehicle(vehicleType));
+    raceLogic.RegisterVehicle(VehicleFactory.CreateVehicle(vehicleType));
 }
 
-AbstractVehicle winner = race.StartRace();
+AbstractVehicle winner = raceLogic.StartRace();
 informerCLI.DisplayWinner(winner);

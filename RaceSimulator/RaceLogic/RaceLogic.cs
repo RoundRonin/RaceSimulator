@@ -3,15 +3,22 @@ using RaceSimulator.Presentation.Interfaces;
 
 namespace RaceSimulator.RaceLogic;
 
-public class RaceLogic(double distance, IPrinter printer)
+public class RaceLogic(IPrinter printer, int TICK_TIME_MS = 1000)
 {
-    public double Distance { get; set; } = distance;
-    public IPrinter printer { get; set; } = printer;
-    public List<AbstractVehicle> Vehicles { get; set; } = new List<AbstractVehicle>();
+    private double _distance;
 
+    public List<AbstractVehicle> Vehicles { get; set; } = new List<AbstractVehicle>();
     public void RegisterVehicle(AbstractVehicle vehicle)
     {
         Vehicles.Add(vehicle);
+        _distance = 0; 
+    }
+
+    public void SetRaceParams(double distacne)
+    {
+        _distance = distacne;
+
+        // Potentially other params can be added, thus it is not a setter syntactically
     }
 
     public AbstractVehicle StartRace()
@@ -25,10 +32,10 @@ public class RaceLogic(double distance, IPrinter printer)
                 currentPosition = vehicle.CalculatePosition();
                 printer.PrintFormattedLine(vehicle.Name, currentPosition.ToString());
 
-                if (currentPosition >= Distance) { return vehicle; }
+                if (currentPosition >= _distance) { return vehicle; }
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(TICK_TIME_MS);
         }
     }
 }
