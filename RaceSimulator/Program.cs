@@ -19,12 +19,14 @@ if (recieverCLI == null || informerCLI == null)
     throw new InvalidOperationException("CLI instance does not implement the required interfaces");
 }
 
-
 printer.PrintFormattedLine("Welcome", "Welcome to the Racing Simulator!");
 
 double distance = recieverCLI.GetRaceDistance();
 int raceType = recieverCLI.GetRaceType();
-raceLogic.SetRaceParams(distance);
+
+printer.PrintFormattedLine("Distance", "The distance is going to be...");
+printer.PrintFormattedLine("Distance", distance.ToString());
+raceLogic.SetSimulationParams(distance);
 
 // Temp solution to generate vehicles automatically
 List<int> vehicleTypes = raceType switch
@@ -37,8 +39,16 @@ List<int> vehicleTypes = raceType switch
 
 foreach (var vehicleType in vehicleTypes)
 {
-    raceLogic.RegisterVehicle(VehicleFactory.CreateVehicle(vehicleType));
+    raceLogic.RegisterObject(VehicleFactory.CreateVehicle(vehicleType));
 }
 
-AbstractVehicle winner = raceLogic.StartRace();
-informerCLI.DisplayWinner(winner);
+raceLogic.StartSimulation();
+if (raceLogic.Result == null)
+{
+    printer.PrintFormattedLine("Error", "Something went wrong during the simulation");
+} 
+else
+{
+    informerCLI.DisplayWinner(raceLogic.Result);
+}
+    
