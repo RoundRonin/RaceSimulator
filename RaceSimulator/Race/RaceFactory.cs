@@ -1,6 +1,8 @@
-﻿namespace RaceSimulator.Race;
+﻿using RaceSimulator.Presentation.Interfaces;
 
-public class RaceFactory(List<Type> raceTypes) : IFactory<RaceLogic>
+namespace RaceSimulator.Race;
+
+public class RaceFactory(List<Type> raceTypes, IPrinter printer, int TICK_TIME_MS) : IFactory<RaceLogic>
 {
     private readonly List<Type> raceTypes = raceTypes;
     public List<Type> Types {
@@ -16,6 +18,7 @@ public class RaceFactory(List<Type> raceTypes) : IFactory<RaceLogic>
         }
 
         var raceTypeToCreate = raceTypes[index - 1];
-        return (RaceLogic)Activator.CreateInstance(raceTypeToCreate);
+        object[] constructorArgs = { printer, TICK_TIME_MS };
+        return (RaceLogic)Activator.CreateInstance(raceTypeToCreate, constructorArgs);
     }
 }

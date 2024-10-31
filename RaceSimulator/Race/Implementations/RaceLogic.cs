@@ -11,7 +11,7 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator, IN
 
     public AbstractVehicle? Result { get; private set; }
 
-    public void RegisterObject(AbstractVehicle abstractVehicle)
+    virtual public void RegisterObject(AbstractVehicle abstractVehicle)
     {
         _vehicles.Add(abstractVehicle);
     }

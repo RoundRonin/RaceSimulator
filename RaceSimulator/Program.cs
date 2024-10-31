@@ -14,7 +14,7 @@ var vehicleTypes = VehicleHelper.GetAllVehicleTypes();
 IPrinter printer = new CommandLinePrinter();
 
 // Create factories
-RaceFactory raceFactory = new(raceTypes);
+RaceFactory raceFactory = new(raceTypes, printer, TICK_TIME_MS);
 VehicleFactory vehicleFactory = new(vehicleTypes);
 
 // Create command line interface
