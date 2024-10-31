@@ -1,10 +1,12 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
 using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.Race.Interfaces;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Race;
 
-public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator, INamedObject
+[Name("Universal Race")]
+public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator
 {
     private double _distance = 0;
     protected readonly List<AbstractVehicle> _vehicles = [];
@@ -15,8 +17,6 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator, IN
     {
         _vehicles.Add(abstractVehicle);
     }
-
-    public string Name { get; set; } = "General race (every transport)";
 
     public void SetSimulationParams(double distance)
     {

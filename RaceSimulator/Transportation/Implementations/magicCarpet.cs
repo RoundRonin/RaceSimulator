@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Magic Carpet")]
 public class MagicCarpet : AbstractAirTransport
 {
     public MagicCarpet()

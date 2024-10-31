@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Flying ship")]
 public class FlyingShip : AbstractAirTransport
 {
     public FlyingShip()

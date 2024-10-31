@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Seven-League Boots")]
 public class SevenLeagueBoots : AbstractGroundTransport
 {
     public SevenLeagueBoots()

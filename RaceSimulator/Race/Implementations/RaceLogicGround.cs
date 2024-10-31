@@ -1,14 +1,12 @@
 using RaceSimulator.Transportation.Abstractions;
 using RaceSimulator.Presentation.Interfaces;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Race;
 
-public class RaceLogicGround : RaceLogic
+[Name("Ground Race")]
+public class RaceLogicGround(IPrinter printer, int tickTimeMs = 1000) : RaceLogic(printer, tickTimeMs)
 {
-    public RaceLogicGround(IPrinter printer, int tickTimeMs = 1000) : base(printer, tickTimeMs)
-    {
-        Name = "Race only for flying transport";
-    }
     override public void RegisterObject(AbstractVehicle vehicle)
     {
         if (vehicle is AbstractGroundTransport groundVehicle) _vehicles.Add(groundVehicle);

@@ -20,7 +20,7 @@ VehicleFactory vehicleFactory = new(vehicleTypes);
 // Create command line interface
 CLI cli = new(printer);
 
-printer.PrintFormattedLine("Welcome", "Welcome to the Racing Simulator!");
+printer.PrintFormattedLine("Info", "Welcome to the Racing Simulator!");
 
 RaceLogic raceLogic = cli.GetRace(raceFactory);
 cli.GetParams(raceLogic);

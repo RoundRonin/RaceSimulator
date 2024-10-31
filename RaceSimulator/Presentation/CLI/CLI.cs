@@ -72,7 +72,10 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
         int PrintedIndex = 1;
         foreach (var type in types)
         {
-            printer.PrintFormattedLine(PrintedIndex.ToString(), type.Name);
+            var attribute = (NameAttribute)Attribute.GetCustomAttribute(type, typeof(NameAttribute));
+            string nameValue = attribute != null ? attribute.Name : "Unknown";
+
+            printer.PrintFormattedLine(PrintedIndex.ToString(), nameValue);
             PrintedIndex++;
         }
     }

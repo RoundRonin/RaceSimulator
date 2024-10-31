@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Baba Yaga's Stupa")]
 public class BabaYagasStupa : AbstractAirTransport
 {
     public BabaYagasStupa()

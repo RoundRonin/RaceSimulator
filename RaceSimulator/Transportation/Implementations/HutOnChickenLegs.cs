@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Hut on chicken legs")]
 public class HutOnChickenLegs : AbstractGroundTransport
 {
     public HutOnChickenLegs()

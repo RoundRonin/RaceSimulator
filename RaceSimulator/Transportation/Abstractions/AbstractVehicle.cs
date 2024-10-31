@@ -1,6 +1,6 @@
 ﻿namespace RaceSimulator.Transportation.Abstractions;
 
-public abstract class AbstractVehicle : INamedObject
+public abstract class AbstractVehicle
 {
     protected double CoordinateX;
 

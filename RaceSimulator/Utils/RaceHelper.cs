@@ -10,7 +10,7 @@ public static class RaceHelper
     {
         return Assembly.GetAssembly(typeof(RaceLogic))
                        .GetTypes()
-                       .Where(t => t.IsClass && t.IsSubclassOf(typeof(RaceLogic)))
+                       .Where(t => t.IsClass && (t == typeof(RaceLogic) || t.IsSubclassOf(typeof(RaceLogic))))
                        .ToList();
     }
 }

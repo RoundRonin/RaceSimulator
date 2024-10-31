@@ -1,7 +1,9 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Transportation;
 
+[Name("Pumpking carriage")]
 public class PumpkingCarriage : AbstractGroundTransport
 {
     public PumpkingCarriage()
