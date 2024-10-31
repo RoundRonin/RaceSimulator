@@ -1,20 +1,23 @@
-﻿using RaceSimulator.Transportation.Abstractions;
-using RaceSimulator.Transportation.Utils;
+﻿using System.Reflection.Metadata;
+using RaceSimulator.Transportation.Abstractions;
 
 namespace RaceSimulator.Transportation;
 
-public static class VehicleFactory
+public class VehicleFactory(List<Type> vehicleTypes) : IFactory<AbstractVehicle>
 {
-    public static AbstractVehicle CreateVehicle(int vehicleType)
-    {
-        var vehicleTypes = VehicleHelper.GetAllVehicleTypes();
+    private readonly List<Type> vehicleTypes = vehicleTypes;
+    public List<Type> Types {
+        get {return vehicleTypes; } 
+    }
 
-        if (vehicleType < 1 || vehicleType > vehicleTypes.Count)
+    public AbstractVehicle Create(int index)
+    {
+        if (index < 1 || index > vehicleTypes.Count)
         {
             throw new ArgumentException("Unknown vehicle type");
         }
 
-        var vehicleTypeToCreate = vehicleTypes[vehicleType - 1];
+        var vehicleTypeToCreate = vehicleTypes[index - 1];
         return (AbstractVehicle)Activator.CreateInstance(vehicleTypeToCreate);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using RaceSimulator.Transportation.Abstractions;
 
-namespace RaceSimulator.Transportation.Utils;
+namespace RaceSimulator.Utils;
 
 public static class VehicleHelper
 {

@@ -1,27 +1,30 @@
 ﻿using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.Presentation.CLI;
-using RaceSimulator.RaceLogic;
+using RaceSimulator.Race;
 using RaceSimulator.Transportation.Abstractions;
+using RaceSimulator.Utils;
+using RaceSimulator.Transportation;
 
 const int TICK_TIME_MS = 1000;
 
+// Execute expensive code once during execution
+var raceTypes = RaceHelper.GetAllRaceTypes();
+var vehicleTypes = VehicleHelper.GetAllVehicleTypes();
+
 IPrinter printer = new CommandLinePrinter();
 
-RaceLogic raceLogic = new(printer, TICK_TIME_MS);
-CLI cli = new CLI(printer);
-IReciever<AbstractVehicle> recieverCLI = cli as IReciever<AbstractVehicle>;
-IInformer informerCLI = cli as IInformer;
+// Create factories
+RaceFactory raceFactory = new(raceTypes);
+VehicleFactory vehicleFactory = new(vehicleTypes);
 
-// Cast check, just in case. For the future
-if (recieverCLI == null || informerCLI == null)
-{
-    throw new InvalidOperationException("CLI instance does not implement the required interfaces");
-}
+// Create command line interface
+CLI cli = new(printer);
 
 printer.PrintFormattedLine("Welcome", "Welcome to the Racing Simulator!");
 
-recieverCLI.GetParams(raceLogic);
-recieverCLI.GetObject(raceLogic);
+RaceLogic raceLogic = cli.GetRace(raceFactory);
+cli.GetParams(raceLogic);
+cli.GetObject(vehicleFactory, raceLogic);
 
 raceLogic.StartSimulation();
 if (raceLogic.Result == null)
@@ -30,6 +33,6 @@ if (raceLogic.Result == null)
 } 
 else
 {
-    informerCLI.DisplayWinner(raceLogic.Result);
+    cli.DisplayWinner(raceLogic.Result);
 }
     

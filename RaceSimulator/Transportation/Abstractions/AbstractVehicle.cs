@@ -1,10 +1,10 @@
 ﻿namespace RaceSimulator.Transportation.Abstractions;
 
-public abstract class AbstractVehicle
+public abstract class AbstractVehicle : INamedObject
 {
     protected double CoordinateX;
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
     public double Speed { get; set; }
     public abstract double CalculatePosition();
 

@@ -1,32 +1,50 @@
 ﻿using RaceSimulator.Transportation.Abstractions;
 using RaceSimulator.Transportation;
 using RaceSimulator.Presentation.Interfaces;
-using RaceSimulator.RaceLogic;
-using RaceSimulator.Transportation.Utils;
+using RaceSimulator.Race.Interfaces;
+using RaceSimulator.Race;
+using RaceSimulator.Utils;
 
 namespace RaceSimulator.Presentation.CLI;
 
-internal class CLI(IPrinter printer) : IReciever<AbstractVehicle>, IInformer
+internal class CLI(IPrinter printer) : IReciever, IInformer
 {
     public void DisplayWinner(AbstractVehicle winner)
     {
         printer.PrintFormattedLine("Winner", $"The winner is {winner.Name}!");
     }
 
-    public void GetParams(ISimulator<AbstractVehicle> simulator)
+    public void GetParams(ISimulator simulator)
     {
-        simulator.SetSimulationParams(GetRaceDistance(), GetRaceType());
+        simulator.SetSimulationParams(GetRaceDistance());
     }
 
-    public void GetObject(ISimulator<AbstractVehicle> simulator)
+    public RaceLogic GetRace(IFactory<RaceLogic> factory)
     {
-        var vehicleTypes = VehicleHelper.GetAllVehicleTypes();
+        printer.PrintFormattedLine("Prompt", "Choose the type of race:");
 
+        PrintOptions(factory.Types);
+
+        string? input = Console.ReadLine();
+        while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int type) || type < 1 || type > factory.Types.Count)
+        {
+            printer.PrintFormattedLine("Error", "Invalid input.");
+            printer.PrintFormattedLine("Prompt", "Choose the type of race:");
+            input = Console.ReadLine();
+        }
+
+        return factory.Create(int.Parse(input));
+    }
+
+    public void GetObject(IFactory<AbstractVehicle> factory, ISimulator simulator)
+    {
         printer.PrintFormattedLine("Prompt", "How many vehicles do you want to register?");
+
         string? input = Console.ReadLine();
         while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleCount) || vehicleCount <= 0)
         {
-            printer.PrintFormattedLine("Error", "Invalid input. Enter a positive number:");
+            printer.PrintFormattedLine("Error", "Invalid input. Enter a positive number");
+            printer.PrintFormattedLine("Prompt", "How many vehicles do you want to register?");
             input = Console.ReadLine();
         }
 
@@ -35,24 +53,18 @@ internal class CLI(IPrinter printer) : IReciever<AbstractVehicle>, IInformer
         while (remainingVehiclesToAdd > 0)
         {
             printer.PrintFormattedLine("Prompt", $"Choose vehicle:");
-            for (int i = 0; i < vehicleTypes.Count; i++)
-            {
-                var vehicleName = vehicleTypes[i].Name;
-                printer.PrintFormattedLine((i + 1).ToString(), vehicleName);
-            }
+            PrintOptions(factory.Types);
 
             input = Console.ReadLine();
-            while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleType) || vehicleType < 1 || vehicleType > vehicleTypes.Count)
+            while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int vehicleType) || vehicleType < 1 || vehicleType > factory.Types.Count)
             {
-                printer.PrintFormattedLine("Error", "Invalid input. Choose a vehicle:");
+                printer.PrintFormattedLine("Error", "Invalid input.");
+                printer.PrintFormattedLine("Prompt", $"Choose vehicle:");
                 input = Console.ReadLine();
             }
 
             int type = int.Parse(input);
-            try
-            {
-                simulator.RegisterObject(VehicleFactory.CreateVehicle(type));
-            }
+            try { simulator.RegisterObject(factory.Create(type)); }
             catch (ArgumentException ex)
             {
                 printer.PrintFormattedLine("Error", ex.Message);
@@ -76,20 +88,13 @@ internal class CLI(IPrinter printer) : IReciever<AbstractVehicle>, IInformer
         return double.Parse(input);
     }
 
-    private int GetRaceType()
-    {
-        printer.PrintFormattedLine("Prompt", "Choose the type of race:");
-        printer.PrintFormattedLine("1", "Ground Transport Only");
-        printer.PrintFormattedLine("2", "Air Transport Only");
-        printer.PrintFormattedLine("3", "All Types of Vehicles");
-
-        string? input = Console.ReadLine();
-        while (string.IsNullOrEmpty(input) || !int.TryParse(input, out int type) || type < 1 || type > 3)
+    private void PrintOptions(List<Type> types) {
+        int PrintedIndex = 1;
+        foreach (var type in types)
         {
-            printer.PrintFormattedLine("Error", "Invalid input. Choose the type of race:");
-            input = Console.ReadLine();
+            printer.PrintFormattedLine(PrintedIndex.ToString(), type.Name);
+            PrintedIndex++;
         }
-        return int.Parse(input);
     }
 
 }
