@@ -7,7 +7,7 @@ namespace RaceSimulator.Race;
 public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator, INamedObject
 {
     private double _distance = 0;
-    protected readonly List<AbstractVehicle> _vehicles = new();
+    protected readonly List<AbstractVehicle> _vehicles = [];
 
     public AbstractVehicle? Result { get; private set; }
 

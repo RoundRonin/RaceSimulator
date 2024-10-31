@@ -18,6 +18,7 @@ public class VehicleFactory(List<Type> vehicleTypes) : IFactory<AbstractVehicle>
         }
 
         var vehicleTypeToCreate = vehicleTypes[index - 1];
+        if (vehicleTypeToCreate == null) { throw new NotImplementedException("vehicle types are not implemented"); }
         return (AbstractVehicle)Activator.CreateInstance(vehicleTypeToCreate);
     }
 }

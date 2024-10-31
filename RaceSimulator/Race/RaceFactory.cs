@@ -19,6 +19,9 @@ public class RaceFactory(List<Type> raceTypes, IPrinter printer, int TICK_TIME_M
 
         var raceTypeToCreate = raceTypes[index - 1];
         object[] constructorArgs = { printer, TICK_TIME_MS };
+
+        if (raceTypeToCreate == null) { throw new NotImplementedException("race types are not implemented"); }
+
         return (RaceLogic)Activator.CreateInstance(raceTypeToCreate, constructorArgs);
     }
 }
