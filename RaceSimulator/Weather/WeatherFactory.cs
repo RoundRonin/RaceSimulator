@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Metadata;
 using RaceSimulator.Transportation.Abstractions;
 using RaceSimulator.Weather.Interfaces;
+using RaceSimulator.Utils.Interfaces;
 
 namespace RaceSimulator.Transportation;
 

@@ -1,4 +1,4 @@
-﻿using RaceSimulator.Utils.Interface;
+﻿using RaceSimulator.Utils.Interfaces;
 using RaceSimulator.Weather.Interfaces;
 using RaceSimulator.Weather.Implementations;
 

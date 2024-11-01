@@ -2,7 +2,7 @@
 using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.Race.Interfaces;
 using RaceSimulator.Utils;
-using RaceSimulator.Utils.Interface;
+using RaceSimulator.Utils.Interfaces;
 using RaceSimulator.Weather.Interfaces;
 using RaceSimulator.Weather.Implementations;
 

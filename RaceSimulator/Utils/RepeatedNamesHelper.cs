@@ -1,4 +1,4 @@
-﻿using RaceSimulator.Utils.Interface;
+﻿using RaceSimulator.Utils.Interfaces;
 
 namespace RaceSimulator.Utils;
 
