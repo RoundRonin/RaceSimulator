@@ -44,7 +44,7 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator
         string selectedWeatherName = AttributeHelper.GetNameAttribute<NameAttribute>(_weather.GetType());
         while (true)
         {
-            printer.PrintFormattedLine("Info", $"It is {selectedWeatherName} now");
+            printer.PrintFormattedLine("Info", $"It is {selectedWeatherName} now, target distance is {_distance} km");
             var lines = new Dictionary<string, string>();
             for (int i = 0; i < vehicles.Count; i++)
             {

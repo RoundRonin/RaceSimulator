@@ -14,8 +14,8 @@ public class BabaYagasStupa : AbstractAirTransport
     }
     override protected void UpdateParams()
     {
-        if (AccelerationCoefficient > 0) AccelerationCoefficient -= 0.01;
-        if (Speed > 50) AccelerationCoefficient -= 0.03;
-        if (AccelerationCoefficient < 0) AccelerationCoefficient += 0.1;
+        if (AccelerationCoefficient > 0) AccelerationCoefficient -= 0.01 * WeatherEffect2;
+        if (Speed > 50) AccelerationCoefficient -= 0.03 * WeatherEffect1;
+        if (AccelerationCoefficient < 0) AccelerationCoefficient += 0.1 * WeatherEffect2;
     }
 }

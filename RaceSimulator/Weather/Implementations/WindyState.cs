@@ -10,5 +10,7 @@ public class WindyState : IWeatherState
     public void ApplyWeather(AbstractVehicle vehicle)
     {
         vehicle.Speed *= 0.9;
+        vehicle.WeatherEffect1 = 0.9;
+        vehicle.WeatherEffect2 = 1.2;
     }
 }

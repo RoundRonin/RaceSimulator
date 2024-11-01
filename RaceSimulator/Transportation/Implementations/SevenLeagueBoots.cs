@@ -17,6 +17,6 @@ public class SevenLeagueBoots : AbstractGroundTransport
 
     override protected void UpdateParams()
     {
-        if (Speed > 10 && timeWithoutRest + 5 > TravelTimeBeforeRest) { Speed--; }
+        if (Speed > 10 && timeWithoutRest * WeatherEffect2 + 5 > TravelTimeBeforeRest) { Speed--; }
     }
 }

@@ -14,6 +14,6 @@ public class Broom : AbstractAirTransport
     }
     override protected void UpdateParams()
     {
-        if (Speed < 70) { AccelerationCoefficient += 0.01; }
+        if (Speed < 70) { AccelerationCoefficient += 0.01 * WeatherEffect2; }
     }
 }

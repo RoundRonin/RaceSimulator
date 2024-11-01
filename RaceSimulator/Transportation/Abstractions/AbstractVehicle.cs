@@ -12,6 +12,8 @@ public abstract class AbstractVehicle : INamedObject
 
     public required string Name { get; set; }
     public double Speed { get; set; }
+    public double WeatherEffect1 { get; set; }
+    public double WeatherEffect2 { get; set; }
     public abstract double CalculatePosition();
 
     protected abstract void UpdateParams();

@@ -16,6 +16,6 @@ public class HutOnChickenLegs : AbstractGroundTransport
     override protected void UpdateParams()
     {
         Speed += 0.01;
-        RestDuration += 0.01;
+        RestDuration += 0.01 * WeatherEffect2;
     }
 }

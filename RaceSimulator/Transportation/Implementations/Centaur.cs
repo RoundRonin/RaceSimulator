@@ -15,6 +15,6 @@ public class Centaur : AbstractGroundTransport
     }
     override protected void UpdateParams()
     {
-        if (RestDuration > 5 && resting) RestDuration -= 0.01;
+        if (RestDuration > 5 && resting) RestDuration -= 0.01 * WeatherEffect1;
     }
 }

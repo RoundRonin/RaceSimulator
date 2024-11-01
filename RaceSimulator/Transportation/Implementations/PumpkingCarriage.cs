@@ -15,7 +15,7 @@ public class PumpkingCarriage : AbstractGroundTransport
     }
     override protected void UpdateParams()
     {
-        if (Speed > 30) Speed -= 0.01;
-        if (Speed < 60 && resting) Speed += 0.01;
+        if (Speed > 30) Speed -= 0.01 * WeatherEffect1;
+        if (Speed < 60 && resting) Speed += 0.01 * WeatherEffect2;
     }
 }
