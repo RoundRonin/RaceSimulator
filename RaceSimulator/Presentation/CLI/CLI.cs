@@ -21,9 +21,11 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
 
     public RaceLogic GetRace(IFactory<RaceLogic> factory)
     {
+        printer.InitRecuringState();
         printer.PrintFormattedLine("Info", "Choose the type of race:");
 
         PrintOptions(factory.Types);
+        printer.StopRecuringState();
         string input = GetInputInRange(1, factory.Types.Count);
 
         return factory.Create(int.Parse(input));
@@ -36,6 +38,7 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
         string input = GetInputInRange(1, factory.Types.Count);
         int remainingVehiclesToAdd = int.Parse(input);
 
+        printer.InitRecuringState();
         while (remainingVehiclesToAdd > 0)
         {
             printer.PrintFormattedLine("Info", $"Choose vehicle:");
@@ -53,6 +56,7 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
             
             remainingVehiclesToAdd--;
         }
+        printer.StopRecuringState();
     }
 
     private double GetRaceDistance()
@@ -70,14 +74,17 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
 
     private void PrintOptions(List<Type> types) {
         int PrintedIndex = 1;
+        var lines = new Dictionary<string, string>();
         foreach (var type in types)
         {
             var attribute = (NameAttribute)Attribute.GetCustomAttribute(type, typeof(NameAttribute));
             string nameValue = attribute != null ? attribute.Name : "Unknown";
+            lines.Add(PrintedIndex.ToString(), nameValue);
 
-            printer.PrintFormattedLine(PrintedIndex.ToString(), nameValue);
             PrintedIndex++;
         }
+
+        printer.PrintFormattedLines(lines);
     }
 
     private string GetInputInRange(int minVal, int maxVal)

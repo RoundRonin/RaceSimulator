@@ -9,7 +9,7 @@ public class RaceLogicGround(IPrinter printer, int tickTimeMs = 1000) : RaceLogi
 {
     override public void RegisterObject(AbstractVehicle vehicle)
     {
-        if (vehicle is AbstractGroundTransport groundVehicle) _vehicles.Add(groundVehicle);
+        if (vehicle is AbstractGroundTransport groundVehicle) vehicles.Add(groundVehicle);
         else throw new ArgumentException("Vehicle type not supported by AirSimulator");
     }
 }
