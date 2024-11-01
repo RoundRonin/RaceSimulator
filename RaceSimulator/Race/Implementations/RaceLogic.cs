@@ -3,6 +3,7 @@ using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.Race.Interfaces;
 using RaceSimulator.Utils;
 using RaceSimulator.Utils.Interface;
+using RaceSimulator.Weather.Interfaces;
 
 namespace RaceSimulator.Race;
 
@@ -11,6 +12,7 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator
 {
     private double _distance = 0;
     protected readonly List<AbstractVehicle> vehicles = [];
+    IWeatherState? _weather;
 
     public AbstractVehicle? Result { get; private set; }
 
@@ -24,9 +26,16 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator
         _distance = distance;
     }
 
+    public void SetWeatherState(IWeatherState weather)
+    {
+        _weather = weather;
+    }
+
     public void StartSimulation()
     {
         RepeatedNamesHelper.NormalizeNames(vehicles.Cast<INamedObject>().ToList());
+
+        ApplyWeatherToAllParticipants();
 
         double currentPosition = 0;
         bool done = false;
@@ -57,5 +66,14 @@ public class RaceLogic(IPrinter printer, int tickTimeMs = 1000) : ISimulator
             Thread.Sleep(tickTimeMs);
         }
         printer.StopRecuringState();
+    }
+
+    private void ApplyWeatherToAllParticipants()
+    {
+        foreach (var vehicle in vehicles)
+        {
+            vehicle.SetWeatherState(_weather);
+            vehicle.ApplyWeather();
+        }
     }
 }

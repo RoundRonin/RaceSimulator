@@ -4,6 +4,7 @@ using RaceSimulator.Presentation.Interfaces;
 using RaceSimulator.Race.Interfaces;
 using RaceSimulator.Race;
 using RaceSimulator.Utils;
+using RaceSimulator.Weather.Interfaces;
 
 namespace RaceSimulator.Presentation.CLI;
 
@@ -31,6 +32,18 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
         return factory.Create(int.Parse(input));
     }
 
+    public IWeatherState GetWeatherState(IFactory<IWeatherState> factory)
+    {
+        printer.InitRecuringState();
+        printer.PrintFormattedLine("Info", "Choose the weather:");
+
+        PrintOptions(factory.Types);
+        printer.StopRecuringState();
+        string input = GetInputInRange(1, factory.Types.Count);
+
+        return factory.Create(int.Parse(input));
+    }
+
     public void GetObject(IFactory<AbstractVehicle> factory, ISimulator simulator)
     {
         printer.PrintFormattedLine("Info", "How many vehicles do you want to register?");
@@ -46,8 +59,7 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
 
             input = Console.ReadLine();
             int type = int.Parse(input);
-            var vehicle = factory.Create(type);
-            try { simulator.RegisterObject(vehicle); }
+            try { simulator.RegisterObject(factory.Create(type)); }
             catch (ArgumentException ex)
             {
                 printer.PrintFormattedLine("Error", ex.Message);
@@ -99,5 +111,4 @@ internal class CLI(IPrinter printer) : IReciever, IInformer
 
         return input;
     }
-
 }
