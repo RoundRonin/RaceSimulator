@@ -3,61 +3,6 @@ using RaceSimulator.Presentation.Interfaces;
 
 namespace RaceSimulator.Presentation.CLI;
 
-//public class CommandLinePrinter : IPrinter
-//{
-//    int informationLines = 0;
-//    bool lastWasMultiple = false;
-//    KeyValuePair<string, string>? LastMessage;
-
-//    // All one-liners are kept intact while overwriting multiple lines
-//    public void InitRecuringState()
-//    {
-//        lastWasMultiple = false;
-//        Console.Clear();
-//        informationLines = 0;
-//    }
-//    public void StopRecuringState()
-//    {
-//        lastWasMultiple = false;
-//        informationLines = 0;
-//    }
-//    public void PrintFormattedLine(string key, string value)
-//    {
-//        if (LastMessage != null)
-//        {
-//            key = LastMessage.Value.Key;
-//            value = LastMessage.Value.Value;
-//            LastMessage = null;
-//        } else if (lastWasMultiple && informationLines == 0)
-//        {
-//            Console.SetCursorPosition(0, 0);
-//        } else if (lastWasMultiple)
-//        {
-//            LastMessage = new(key, value);
-//            return;
-//        }
-//        informationLines++;
-//        string formattedLine = string.Format("{0,-5}: {1}", key, value);
-//        Console.WriteLine(formattedLine);
-//        lastWasMultiple = false;
-//    }
-
-//    public void PrintFormattedLines(Dictionary<string, string> lines)
-//    {
-//        Console.SetCursorPosition(0, informationLines);
-
-//        foreach (var line in lines)
-//        {
-//            string formattedLine = string.Format("{0,-5}: {1}", line.Key, line.Value);
-//            Console.WriteLine(formattedLine.PadRight(Console.WindowWidth));
-//        }
-
-//        informationLines = 0;
-//        lastWasMultiple = true;
-//    }
-//}
-
-
 public class CommandLinePrinter : IPrinter
 {
     int informationLines = 0;
